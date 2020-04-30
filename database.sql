@@ -8,7 +8,7 @@ CREATE TABLE "user" (
 
 CREATE TABLE "recipes" (
     "id" SERIAL PRIMARY KEY,
-    "name" VARCHAR(80) NOT NULL,
+    "recipe" VARCHAR(80) NOT NULL,
     "directions" VARCHAR(10000) NOT NULL,
     "calories" INT,
     "protein" INT,

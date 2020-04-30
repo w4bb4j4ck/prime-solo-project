@@ -30,7 +30,6 @@ class App extends Component {
       <Router>
         <div>
           <Nav />
-          {/* <RecipeList /> */}
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
             <Redirect exact from="/" to="/home" />
@@ -56,6 +55,12 @@ class App extends Component {
               exact
               path="/info"
               component={InfoPage}
+            />
+            {/* Recipe Route */}
+            <ProtectedRoute
+              exact
+              path="/recipes"
+              component={RecipeList}
             />
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function* fetchRecipes (action){
     try{
-        const response = yield axios.get('/recipes');
+        const response = yield axios.get('/api/meal/recipes');
         yield put ({type: 'SET_RECIPES', payload: response.data});
     }
     catch(error){
