@@ -1,4 +1,5 @@
 import React from 'react';
+import Sidebar from '../Sidebar/Sidebar';
 
 // This is one of our simplest components
 // It doesn't have local state, so it can be a function component.
@@ -6,11 +7,14 @@ import React from 'react';
 // or even care what the redux state is, so it doesn't need 'connect()'
 
 const InfoPage = () => (
-  <div>
-    <p>
-      Info Page
-    </p>
+  <>
+  <div className="sidebar">
+    <Sidebar />
   </div>
+  <div className="main-data">
+    <h1>Info Page</h1>
+  </div>
+  </>
 );
 
 export default InfoPage;
