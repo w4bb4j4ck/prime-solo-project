@@ -3,11 +3,6 @@ import './Sidebar.css';
 import { Link } from 'react-router-dom';
 
 class Sidebar extends Component {
-
-    handleClick = () => {
-        console.log('test');
-    }
-
     render(){
         return(
             <>
@@ -17,7 +12,7 @@ class Sidebar extends Component {
             <Link to="/recipes">
                 <div className="menu-item">Recipes</div>
             </Link>
-            <Link to="/">
+            <Link to="/grocery-list">
                 <div className="menu-item">List</div>
             </Link>
             </>

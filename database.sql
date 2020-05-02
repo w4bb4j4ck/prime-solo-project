@@ -42,12 +42,19 @@ CREATE TABLE "grocery_lists" (
     "created_at" DATE
 );
 
+CREATE TABLE "categories" (
+    "id" SERIAL PRIMARY KEY,
+    "category" VARCHAR(80) NOT NULL
+);
+
 CREATE TABLE "list_items" (
     "id" SERIAL PRIMARY KEY,
     "list_id" INT REFERENCES "grocery_lists",
     "ingredient_id" INT REFERENCES "ingredients",
+    "description" VARCHAR(244),
     "quantity" INT,
-    "unit_id" INT REFERENCES "units"
+    "unit_id" INT REFERENCES "units",
+    "category_id" INT REFERENCES "categories"
 );
 
 INSERT INTO "recipes" ("name", "directions", "calories", "protein", "sugar") 
@@ -102,3 +109,7 @@ VALUES ('Whole chicken', 1, 1, 1),
 ('Chickpeas', 4, 2, 6),
 ('Shrimp', 5, 2, 4),
 ('Ground Ginger', 6, 3, 3);
+
+INSERT INTO "categories" ("category") 
+VALUES ('Produce'), ('Gluten'), ('Gluten-Free'), ('Meat'), ('Canned Goods'), ('Snacks'), ('Cleaning Supplies'), 
+('Toiletries'), ('Misc'), ('Spices'), ('Grains'), ('Beverage');

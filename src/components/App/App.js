@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 
 import './App.css';
 import RecipeList from '../RecipeList/RecipeList';
+import GroceryList from '../GroceryList/GroceryList';
 
 class App extends Component {
   componentDidMount () {
@@ -61,6 +62,12 @@ class App extends Component {
               exact
               path="/recipes"
               component={RecipeList}
+            />
+            {/* Grocery List Route */}
+            <ProtectedRoute
+              exact
+              path="/grocery-list"
+              component={GroceryList}
             />
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />

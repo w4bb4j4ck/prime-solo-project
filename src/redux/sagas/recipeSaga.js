@@ -11,8 +11,19 @@ function* fetchRecipes (action){
     }
 }
 
+function* addRecipe (action) {
+    try{
+        yield axios.post(`/api/meal/recipes`, action.payload);
+        yield put ({type: 'FETCH_RECIPES'});
+    }
+    catch(error){
+        console.log('Error in addRecipe.', error);
+    }
+}
+
 function* recipeSaga(){
     yield takeLatest('FETCH_RECIPES', fetchRecipes);
+    yield takeLatest('ADD_RECIPE', addRecipe);
 }
 
 export default recipeSaga;

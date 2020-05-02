@@ -1,15 +1,15 @@
 .nav {
   overflow: hidden;
-  background-color: #00acb0;
+  background-color: crimson;
   height: 96px;
 }
 
 .nav-link {
   float: left;
-  color: #f2f2f2;
-  background-color: #00acb0;
+  color: black;
+  background-color: crimson;
   text-align: center;
-  padding: 24px 10px;
+  padding: 36px 10px;
   text-decoration: none;
   font-size: 15px;
 
@@ -21,9 +21,15 @@
 }
 
 .nav-link:hover {
-  background-color: #008183;
+  background-color: darkred;
 }
 
 .nav-right {
   float: right;
+}
+
+#nav-menu {
+  /* width: 84px;
+  height: 96px; */
+  background-color: gray;
 }
