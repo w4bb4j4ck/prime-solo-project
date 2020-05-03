@@ -101,12 +101,9 @@ function ListModal(props) {
                                 value={props.test}
                                 // onChange={handleChange}
                                 label="Unit">
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                <MenuItem value=""><em>None</em></MenuItem>
+                                {props.units.map((unit) => 
+                                <MenuItem value={unit.id} key={unit.id}>{unit.unit}</MenuItem>)}
                             </Select>
                         </FormControl>
                         <FormControl variant="outlined" className={classes.formControl}>
@@ -118,9 +115,7 @@ function ListModal(props) {
                                 // onChange={handleChange}
                                 label="Category"
                                 fullWidth>
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
+                                <MenuItem value=""><em>None</em></MenuItem>
                                 <MenuItem value={10}>Ten</MenuItem>
                                 <MenuItem value={20}>Twenty</MenuItem>
                                 <MenuItem value={30}>Thirty</MenuItem>

@@ -54,7 +54,8 @@ class RecipeList extends Component {
 }
 
 const mapStateToProps = (reduxStore) => ({
-    recipes: reduxStore.recipes
+    recipes: reduxStore.recipes,
+    units: reduxStore.units,
 })
 
 export default connect(mapStateToProps)(RecipeList);

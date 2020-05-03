@@ -12,7 +12,7 @@ router.get('/recipes', rejectUnauthenticated, (req, res) => {
   pool.query(queryText)
     .then((result) => { res.send(result.rows); })
     .catch((error) => {
-      console.log('Error completing SELECT plant query', error);
+      console.log('Error in router.get.', error);
       res.sendStatus(500);
     });
 });
@@ -22,7 +22,7 @@ router.post('/recipes', (req, res) => {
   pool.query(queryText, [req.body.recipe, req.body.directions])
     .then(() => { res.sendStatus(201); })
     .catch((error) => {
-      console.log('Error in router.post', error);
+      console.log('Error in router.post.', error);
       res.sendStatus(500);
     });
 });
@@ -32,7 +32,7 @@ router.get('/groceries', rejectUnauthenticated, (req, res) => {
   pool.query(queryText)
     .then((result) => { res.send(result.rows); })
     .catch((error) => {
-      console.log('Error completing SELECT plant query', error);
+      console.log('Error in router.get.', error);
       res.sendStatus(500);
     });
 });
@@ -48,7 +48,17 @@ router.post('/groceries', (req, res) => {
   pool.query(queryText, queryValues)
     .then(() => { res.sendStatus(201); })
     .catch((error) => {
-      console.log('Error in router.post', error);
+      console.log('Error in router.post.', error);
+      res.sendStatus(500);
+    });
+});
+
+router.get('/units', rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * FROM "units" ORDER BY "unit";`;
+  pool.query(queryText)
+    .then((result) => { res.send(result.rows); })
+    .catch((error) => {
+      console.log('Error in router.get.', error);
       res.sendStatus(500);
     });
 });

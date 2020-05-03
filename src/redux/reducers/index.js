@@ -4,6 +4,7 @@ import loginMode from './loginModeReducer';
 import user from './userReducer';
 import recipes from './recipesReducer';
 import groceries from './groceriesReducer';
+import units from './unitsReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   recipes, // will have the list of recipes
   groceries,
+  units,
 });
 
 export default rootReducer;

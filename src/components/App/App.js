@@ -23,7 +23,8 @@ import GroceryList from '../GroceryList/GroceryList';
 
 class App extends Component {
   componentDidMount () {
-    this.props.dispatch({type: 'FETCH_USER'})
+    this.props.dispatch({type: 'FETCH_USER'});
+    this.props.dispatch({type: 'FETCH_UNITS'});
   }
 
   render() {

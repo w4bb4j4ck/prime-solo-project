@@ -18,7 +18,7 @@ class GroceryList extends Component {
                 </div>
                 <div className="main-data">
                     <div>
-                        <ListModal test="test" />
+                        <ListModal test="test" units={this.props.units} />
                     </div>
                     <ListTable />
                 </div>
@@ -27,4 +27,8 @@ class GroceryList extends Component {
     }
 }
 
-export default connect()(GroceryList);
+const mapStateToProps = (reduxStore) => ({
+    units: reduxStore.units,
+});
+
+export default connect(mapStateToProps)(GroceryList);
