@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* fetchGroceries (action){
+function* fetchGroceries(action){
     try{
         const response = yield axios.get('/api/meal/groceries');
         yield put ({type: 'SET_GROCERIES', payload: response.data});
@@ -11,7 +11,7 @@ function* fetchGroceries (action){
     }
 }
 
-function* addGrocery (action) {
+function* addGrocery(action){
     try{
         yield axios.post(`/api/meal/groceries`, action.payload);
         yield put ({type: 'FETCH_GROCERIES'});
@@ -21,9 +21,20 @@ function* addGrocery (action) {
     }
 }
 
+function* deleteGrocery(action){
+    try{
+        yield axios.delete(`/api/meal/groceries/${action.payload}`);
+        yield put ({type: 'FETCH_GROCERIES'});
+    }
+    catch(error){
+        console.log('Error in deleteGrocery.', error);
+    }
+}
+
 function* grocerySaga(){
     yield takeLatest('FETCH_GROCERIES', fetchGroceries);
     yield takeLatest('ADD_GROCERY', addGrocery);
+    yield takeLatest('DELETE_GROCERY', deleteGrocery);
 }
 
 export default grocerySaga;

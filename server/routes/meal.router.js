@@ -53,6 +53,16 @@ router.post('/groceries', (req, res) => {
     });
 });
 
+router.delete('/groceries/:id', (req, res) => {
+  const queryText = 'DELETE FROM "list_items" WHERE id=$1';
+  pool.query(queryText, [req.params.id])
+    .then(() => { res.sendStatus(200); })
+    .catch((err) => {
+      console.log('Error completing SELECT plant query', err);
+      res.sendStatus(500);
+    });
+});
+
 router.get('/units', rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * FROM "units";`;
   pool.query(queryText)

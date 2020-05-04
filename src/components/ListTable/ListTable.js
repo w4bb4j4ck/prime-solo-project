@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) =>({
 function ListTable(props) {
   const classes = useStyles();
 
+  const handleDelete = (id) => () => {
+    props.dispatch({type: 'DELETE_GROCERY', payload: id});
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -43,7 +47,7 @@ function ListTable(props) {
               <TableCell align="right">{row.unit_id}</TableCell>
               <TableCell align="right">{row.category_id}</TableCell>
               <TableCell align="right">
-              <IconButton aria-label="delete" className={classes.margin}>
+              <IconButton aria-label="delete" className={classes.margin} onClick={handleDelete(row.id)}>
                 <DeleteIcon fontSize="small" />
               </IconButton>
               </TableCell>
