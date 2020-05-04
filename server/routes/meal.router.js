@@ -28,7 +28,9 @@ router.post('/recipes', (req, res) => {
 });
 
 router.get('/groceries', rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "list_items" ORDER BY "category_id";`;
+  const queryText = `SELECT "list_items"."id", "list_items"."description", "list_items"."quantity", "units"."unit", 
+  "categories"."category" FROM "list_items" JOIN "units" ON "list_items"."unit_id" = "units"."id"
+  JOIN "categories" ON "list_items"."category_id" = "categories"."id" ORDER BY "categories"."category";`;
   pool.query(queryText)
     .then((result) => { res.send(result.rows); })
     .catch((error) => {

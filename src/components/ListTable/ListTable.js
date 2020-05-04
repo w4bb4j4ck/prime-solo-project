@@ -15,9 +15,6 @@ const useStyles = makeStyles((theme) =>({
   table: {
     minWidth: 650,
   },
-  margin: {
-    margin: theme.spacing(0),
-  },
 }));
 
 function ListTable(props) {
@@ -44,8 +41,8 @@ function ListTable(props) {
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">{row.description}</TableCell>
               <TableCell align="right">{row.quantity}</TableCell>
-              <TableCell align="right">{row.unit_id}</TableCell>
-              <TableCell align="right">{row.category_id}</TableCell>
+              <TableCell align="right">{row.unit}</TableCell>
+              <TableCell align="right">{row.category}</TableCell>
               <TableCell align="right">
               <IconButton aria-label="delete" className={classes.margin} onClick={handleDelete(row.id)}>
                 <DeleteIcon fontSize="small" />
