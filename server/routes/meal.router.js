@@ -54,7 +54,17 @@ router.post('/groceries', (req, res) => {
 });
 
 router.get('/units', rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "units" ORDER BY "unit";`;
+  const queryText = `SELECT * FROM "units";`;
+  pool.query(queryText)
+    .then((result) => { res.send(result.rows); })
+    .catch((error) => {
+      console.log('Error in router.get.', error);
+      res.sendStatus(500);
+    });
+});
+
+router.get('/categories', rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * FROM "categories";`;
   pool.query(queryText)
     .then((result) => { res.send(result.rows); })
     .catch((error) => {

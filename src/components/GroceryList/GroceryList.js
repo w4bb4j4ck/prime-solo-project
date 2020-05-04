@@ -6,8 +6,31 @@ import {connect} from 'react-redux';
 
 class GroceryList extends Component {
 
+    state = {
+        description: '',
+        quantity: '',
+        unit_id: 0,
+        category_id: 0
+    }
+
     componentDidMount(){
         this.props.dispatch({type: 'FETCH_GROCERIES'});
+    }
+
+    handleChange = (input) => (event) => {
+        this.setState({
+            [input]: event.target.value
+        })
+    }
+
+    handleAdd = () => {
+        const item = {
+            description: this.state.description,
+            quantity: this.state.quantity,
+            unit_id: this.state.unit_id,
+            category_id: this.state.category_id
+        }
+        this.props.dispatch({type: 'ADD_GROCERY', payload: item});
     }
 
     render() {
@@ -18,7 +41,9 @@ class GroceryList extends Component {
                 </div>
                 <div className="main-data">
                     <div>
-                        <ListModal test="test" units={this.props.units} />
+                        <ListModal quantity={this.state.quantity} units={this.props.units} categories={this.props.categories} 
+                        description={this.state.description} handleChange={this.handleChange} unit={this.state.unit}
+                        category={this.state.category} handleAdd={this.handleAdd} />
                     </div>
                     <ListTable />
                 </div>
@@ -29,6 +54,7 @@ class GroceryList extends Component {
 
 const mapStateToProps = (reduxStore) => ({
     units: reduxStore.units,
+    categories: reduxStore.categories,
 });
 
 export default connect(mapStateToProps)(GroceryList);

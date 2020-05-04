@@ -39,8 +39,8 @@ function ListModal(props) {
         setOpen(false);
     };
 
-    const handleSave = () => {
-        props.handleSave();
+    const handleAdd = () => {
+        props.handleAdd();
         setOpen(false);
     }
 
@@ -74,8 +74,8 @@ function ListModal(props) {
                         <TextField
                             id="outlined-full-width"
                             label="Description"
-                            // onChange={props.handleChange('recipe')}
-                            value={""}
+                            onChange={props.handleChange('description')}
+                            value={props.description}
                             fullWidth
                             margin="normal"
                             // InputLabelProps={{
@@ -85,8 +85,8 @@ function ListModal(props) {
                         <TextField
                             // id="outlined-full-width"
                             label="Quantity"
-                            // onChange={props.handleChange('ingredient')}
-                            // value={props.ingredient}
+                            onChange={props.handleChange('quantity')}
+                            value={props.quantity}
                             // fullWidth
                             margin="normal"
                             // InputLabelProps={{
@@ -98,11 +98,11 @@ function ListModal(props) {
                             <Select
                                 labelId="unit"
                                 id="unit-select"
-                                value={props.test}
-                                // onChange={handleChange}
+                                value={props.unit}
+                                onChange={props.handleChange('unit_id')}
                                 label="Unit">
-                                <MenuItem value=""><em>None</em></MenuItem>
-                                {props.units.map((unit) => 
+                                <MenuItem value={null}><em>None</em></MenuItem>
+                                {props.units && props.units.map((unit) => 
                                 <MenuItem value={unit.id} key={unit.id}>{unit.unit}</MenuItem>)}
                             </Select>
                         </FormControl>
@@ -111,14 +111,12 @@ function ListModal(props) {
                             <Select
                                 labelId="category"
                                 id="category-select"
-                                value={props.test}
-                                // onChange={handleChange}
-                                label="Category"
-                                fullWidth>
+                                value={props.category}
+                                onChange={props.handleChange('category_id')}
+                                label="Category">
                                 <MenuItem value=""><em>None</em></MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                {props.categories && props.categories.map((category) => 
+                                <MenuItem value={category.id} key={category.id}>{category.category}</MenuItem>)}
                             </Select>
                         </FormControl>
                     </DialogContent>
@@ -127,7 +125,7 @@ function ListModal(props) {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleSave} color="primary">
+                    <Button onClick={handleAdd} color="primary">
                         Add
                     </Button>
                 </DialogActions>
