@@ -1,8 +1,6 @@
 const express = require('express');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
-const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
-const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
@@ -28,9 +26,9 @@ router.post('/recipes', (req, res) => {
 });
 
 router.get('/groceries', rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT "list_items"."id", "list_items"."description", "list_items"."quantity", "units"."unit", 
-  "categories"."category" FROM "list_items" JOIN "units" ON "list_items"."unit_id" = "units"."id"
-  JOIN "categories" ON "list_items"."category_id" = "categories"."id" ORDER BY "categories"."category";`;
+  const queryText = `SELECT "list_items"."id", "list_items"."description", "list_items"."quantity", "list_items"."category_id", 
+  "list_items"."unit_id", "units"."unit", "categories"."category" FROM "list_items" JOIN "units" ON "list_items"."unit_id" = 
+  "units"."id" JOIN "categories" ON "list_items"."category_id" = "categories"."id" ORDER BY "categories"."category";`;
   pool.query(queryText)
     .then((result) => { res.send(result.rows); })
     .catch((error) => {
@@ -64,6 +62,24 @@ router.delete('/groceries/:id', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+router.put('/groceries', (req, res) => {
+  const queryText = `UPDATE "list_items" SET "description" = $1, "quantity" = $2, "unit_id" = $3, "category_id" = $4 
+  WHERE "id" = $5;`;
+  const queryValues = [
+      req.body.description,
+      req.body.quantity,
+      req.body.unit_id,
+      req.body.category_id,
+      req.body.id
+  ];
+  pool.query(queryText, queryValues)
+  .then(() => {res.sendStatus(204);})
+  .catch((error) => {
+      console.log('Error in router.put.', error);
+      res.sendStatus(500);
+  })
+})
 
 router.get('/units', rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * FROM "units";`;

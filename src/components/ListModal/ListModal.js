@@ -14,6 +14,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
     fab: {
@@ -28,9 +30,15 @@ const styles = theme => ({
 function ListModal(props) {
     const [open, setOpen] = React.useState(false);
     const [scroll, setScroll] = React.useState('paper');
+    const [input, setInput] = React.useState({});
     const { classes } = props;
 
-    const handleClickOpen = (scrollType) => () => {
+    React.useEffect(() => {
+        setInput({description: props.description, quantity: props.quantity, unit_id: props.unit_id, 
+        category_id: props.category_id});}, [props]);
+
+    const handleClickOpen = (scrollType) => (event) => {
+        event.preventDefault();
         setOpen(true);
         setScroll(scrollType);
     };
@@ -42,6 +50,56 @@ function ListModal(props) {
     const handleAdd = () => {
         props.handleAdd();
         setOpen(false);
+    }
+
+    const handleSave = () => {
+        const update = input
+        console.log('TODO save', update);
+    }
+
+    const handleChange = (event) => setInput({
+        ...input,
+        [event.currentTarget.name]: event.currentTarget.value
+    });
+
+    const valueSource = (source) => {
+        if(props.editMode){
+            switch(source){
+                case 'description':
+                    return input.description;
+                case 'quantity':
+                    return input.quantity;
+                case 'unit_id':
+                    return input.unit_id;
+                case 'category_id':
+                    return input.category_id;
+                default:
+                    return null;
+            }
+        }
+        else{
+            switch(source){
+                case 'description':
+                    return props.description;
+                case 'quantity':
+                    return props.quantity;
+                case 'unit_id':
+                    return props.unit_id;
+                case 'category_id':
+                    return props.category_id;
+                default:
+                    return null;
+            }
+        }
+    }
+
+    const handleSource = (input) => {
+        if(props.editMode){
+            return handleChange;
+        }
+        else{
+            return props.handleChange(input);
+        }
     }
 
     const descriptionElementRef = React.useRef(null);
@@ -56,9 +114,13 @@ function ListModal(props) {
 
     return (
         <div>
+            {props.editMode ?
+            <Typography className={classes.root}>
+                <Link href="#" onClick={handleClickOpen('paper')}>{props.description}</Link>
+            </Typography>:
             <Fab color="primary" aria-label="Add" className={classes.fab} onClick={handleClickOpen('paper')}>
                 <AddIcon />
-            </Fab>
+            </Fab>}
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -74,8 +136,9 @@ function ListModal(props) {
                         <TextField
                             id="outlined-full-width"
                             label="Description"
-                            onChange={props.handleChange('description')}
-                            value={props.description}
+                            name="description"
+                            onChange={handleSource('description')}
+                            value={valueSource('description')}
                             fullWidth
                             margin="normal"
                             // InputLabelProps={{
@@ -85,8 +148,10 @@ function ListModal(props) {
                         <TextField
                             // id="outlined-full-width"
                             label="Quantity"
-                            onChange={props.handleChange('quantity')}
-                            value={props.quantity}
+                            name="quantity"
+                            type="number"
+                            onChange={handleSource('quantity')}
+                            value={valueSource('quantity')}
                             // fullWidth
                             margin="normal"
                             // InputLabelProps={{
@@ -98,8 +163,9 @@ function ListModal(props) {
                             <Select
                                 labelId="unit"
                                 id="unit-select"
-                                value={props.unit}
-                                onChange={props.handleChange('unit_id')}
+                                onChange={handleSource('unit_id')}
+                                value={valueSource('unit_id')}
+                                name="unit_id"
                                 label="Unit">
                                 <MenuItem value={null}><em>None</em></MenuItem>
                                 {props.units && props.units.map((unit) => 
@@ -111,8 +177,9 @@ function ListModal(props) {
                             <Select
                                 labelId="category"
                                 id="category-select"
-                                value={props.category}
-                                onChange={props.handleChange('category_id')}
+                                onChange={handleSource('category_id')}
+                                value={valueSource('category_id')}
+                                name="category_id"
                                 label="Category">
                                 <MenuItem value=""><em>None</em></MenuItem>
                                 {props.categories && props.categories.map((category) => 
@@ -125,9 +192,9 @@ function ListModal(props) {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleAdd} color="primary">
-                        Add
-                    </Button>
+                    {props.editMode ?
+                    <Button onClick={handleSave} color="primary">Save</Button>:
+                    <Button onClick={handleAdd} color="primary">Add</Button>}
                 </DialogActions>
             </Dialog>
         </div>

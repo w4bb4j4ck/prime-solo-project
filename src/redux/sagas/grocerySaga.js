@@ -31,10 +31,21 @@ function* deleteGrocery(action){
     }
 }
 
+function* updateGrocery(action){
+    try{
+        yield axios.put(`/api/meal/groceries`, action.payload);
+        yield put ({type: 'FETCH_GROCERIES'});
+    }
+    catch(error){
+        console.log('Error in updateGrocery.', error);
+    }
+}
+
 function* grocerySaga(){
     yield takeLatest('FETCH_GROCERIES', fetchGroceries);
     yield takeLatest('ADD_GROCERY', addGrocery);
     yield takeLatest('DELETE_GROCERY', deleteGrocery);
+    yield takeLatest('UPDATE_GROCERY', updateGrocery);
 }
 
 export default grocerySaga;

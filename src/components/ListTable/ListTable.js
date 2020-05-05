@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ListModal from '../ListModal/ListModal';
 
 const useStyles = makeStyles((theme) =>({
   table: {
@@ -39,14 +40,17 @@ function ListTable(props) {
         <TableBody>
           {props.groceries.map((row) => (
             <TableRow key={row.id}>
-              <TableCell component="th" scope="row">{row.description}</TableCell>
+              <TableCell component="th" scope="row">
+                <ListModal quantity={row.quantity} units={props.units} categories={props.categories}
+                          description={row.description} unit_id={row.unit_id} category_id={row.category_id} editMode={true} />
+              </TableCell>
               <TableCell align="right">{row.quantity}</TableCell>
               <TableCell align="right">{row.unit}</TableCell>
               <TableCell align="right">{row.category}</TableCell>
               <TableCell align="right">
-              <IconButton aria-label="delete" className={classes.margin} onClick={handleDelete(row.id)}>
-                <DeleteIcon fontSize="small" />
-              </IconButton>
+                <IconButton aria-label="delete" className={classes.margin} onClick={handleDelete(row.id)}>
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}

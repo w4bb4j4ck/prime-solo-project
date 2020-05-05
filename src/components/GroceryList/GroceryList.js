@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import ListTable from '../ListTable/ListTable';
 import ListModal from '../ListModal/ListModal';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 class GroceryList extends Component {
 
@@ -13,8 +13,8 @@ class GroceryList extends Component {
         category_id: 0
     }
 
-    componentDidMount(){
-        this.props.dispatch({type: 'FETCH_GROCERIES'});
+    componentDidMount() {
+        this.props.dispatch({ type: 'FETCH_GROCERIES' });
     }
 
     handleChange = (input) => (event) => {
@@ -30,7 +30,7 @@ class GroceryList extends Component {
             unit_id: this.state.unit_id,
             category_id: this.state.category_id
         }
-        this.props.dispatch({type: 'ADD_GROCERY', payload: item});
+        this.props.dispatch({ type: 'ADD_GROCERY', payload: item });
     }
 
     render() {
@@ -41,11 +41,11 @@ class GroceryList extends Component {
                 </div>
                 <div className="main-data">
                     <div>
-                        <ListModal quantity={this.state.quantity} units={this.props.units} categories={this.props.categories} 
-                        description={this.state.description} handleChange={this.handleChange} unit={this.state.unit}
-                        category={this.state.category} handleAdd={this.handleAdd} />
+                        <ListModal quantity={this.state.quantity} units={this.props.units} categories={this.props.categories}
+                            description={this.state.description} handleChange={this.handleChange} unit_id={this.state.unit_id}
+                            category_id={this.state.category_id} handleAdd={this.handleAdd} editMode={false} />
                     </div>
-                    <ListTable />
+                    <ListTable units={this.props.units} categories={this.props.categories} />
                 </div>
             </div>
         )
