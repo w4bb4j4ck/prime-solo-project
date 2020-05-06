@@ -61,19 +61,19 @@ export default function RecipeItem(props) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={props.recipe}
+        title={props.recipe.recipe}
         subheader="September 14, 2016"
       />
       <CardMedia
         className={classes.media}
         image="/static/images/cards/paella.jpg"
-        title={props.recipe}
+        title={props.recipe.recipe}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          Calories: {props.calories}
-          Protein: {props.protein}
-          Sugar: {props.sugar}
+          Calories: {props.recipe.calories}
+          Protein: {props.recipe.protein}
+          Sugar: {props.recipe.sugar}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -98,7 +98,7 @@ export default function RecipeItem(props) {
         <CardContent>
           <Typography paragraph>Directions:</Typography>
           <Typography paragraph>
-          {props.directions}
+          {props.recipe.directions}
           </Typography>
         </CardContent>
       </Collapse>

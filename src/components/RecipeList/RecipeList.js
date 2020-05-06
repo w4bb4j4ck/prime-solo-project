@@ -22,10 +22,11 @@ class RecipeList extends Component {
         });
       };
 
-    handleSave = () => {
+    handleSave = (inputList) => {
         const newRecipe = {
             recipe: this.state.recipe,
-            directions: this.state.directions
+            directions: this.state.directions,
+            ingredients: inputList
         }
         this.props.dispatch({type: 'ADD_RECIPE', payload: newRecipe});
     }
@@ -44,7 +45,7 @@ class RecipeList extends Component {
                     <div className="grid-container">
                         {this.props.recipes.map((recipe) =>
                             <div className="grid-item" key={recipe.id}>
-                                <RecipeItem recipe={recipe.recipe} directions={recipe.directions} />
+                                <RecipeItem recipe={recipe} />
                             </div>)}
                     </div>
                 </div>

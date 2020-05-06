@@ -12,8 +12,13 @@ function* fetchRecipes (action){
 }
 
 function* addRecipe (action) {
+    const recipeItem = {
+        recipe: action.payload.recipe,
+        directions: action.payload.directions
+    }
     try{
-        yield axios.post(`/api/meal/recipes`, action.payload);
+        const response = yield axios.post(`/api/meal/recipes`, recipeItem);
+        yield axios.post(`/api/meal/recipes/${response.data[0].id}`, action.payload.ingredients);
         yield put ({type: 'FETCH_RECIPES'});
     }
     catch(error){

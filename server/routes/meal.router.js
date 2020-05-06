@@ -16,9 +16,25 @@ router.get('/recipes', rejectUnauthenticated, (req, res) => {
 });
 
 router.post('/recipes', (req, res) => {
-  const queryText = `INSERT INTO "recipes" ("recipe", "directions") VALUES ($1, $2)`;
+  const queryText = `INSERT INTO "recipes" ("recipe", "directions") VALUES ($1, $2) RETURNING id;`;
   pool.query(queryText, [req.body.recipe, req.body.directions])
-    .then(() => { res.sendStatus(201); })
+    .then((result) => { res.send(result.rows); })
+    .catch((error) => {
+      console.log('Error in router.post.', error);
+      res.sendStatus(500);
+    });
+});
+
+router.post('/recipes/:id', (req, res) => {
+  const length = req.body.length;
+  let queryText = 'INSERT INTO "ingredients" ("name", "recipe_id") VALUES';
+  for(let i = 0; i < (length - 1); i++){
+    let value = ` ('${req.body[i].ingredient}', ${req.params.id}),`;
+    queryText += value; 
+  }
+  queryText += `('${req.body[length - 1].ingredient}', ${req.params.id});`;
+  pool.query(queryText)
+    .then(() => { res.sendStatus(204); })
     .catch((error) => {
       console.log('Error in router.post.', error);
       res.sendStatus(500);
@@ -67,18 +83,18 @@ router.put('/groceries', (req, res) => {
   const queryText = `UPDATE "list_items" SET "description" = $1, "quantity" = $2, "unit_id" = $3, "category_id" = $4 
   WHERE "id" = $5;`;
   const queryValues = [
-      req.body.description,
-      req.body.quantity,
-      req.body.unit_id,
-      req.body.category_id,
-      req.body.id
+    req.body.description,
+    req.body.quantity,
+    req.body.unit_id,
+    req.body.category_id,
+    req.body.id
   ];
   pool.query(queryText, queryValues)
-  .then(() => {res.sendStatus(204);})
-  .catch((error) => {
+    .then(() => { res.sendStatus(204); })
+    .catch((error) => {
       console.log('Error in router.put.', error);
       res.sendStatus(500);
-  })
+    })
 })
 
 router.get('/units', rejectUnauthenticated, (req, res) => {

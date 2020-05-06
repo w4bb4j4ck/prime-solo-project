@@ -13,13 +13,14 @@ import AddIcon from '@material-ui/icons/Add';
 
 const styles = theme => ({
     fab: {
-      margin: theme.spacing(1),
+        margin: theme.spacing(1),
     },
-  });
+});
 
 function RecipeModal(props) {
     const [open, setOpen] = React.useState(false);
     const [scroll, setScroll] = React.useState('paper');
+    const [inputList, setInputList] = React.useState([{ ingredient: '' }]);
     const { classes } = props;
 
     const handleClickOpen = (scrollType) => () => {
@@ -32,9 +33,29 @@ function RecipeModal(props) {
     };
 
     const handleSave = () => {
-        props.handleSave();
+        props.handleSave(inputList);
         setOpen(false);
     }
+
+    // handle input change
+    const handleInputChange = (e, index) => {
+        const { name, value } = e.target;
+        const list = [...inputList];
+        list[index][name] = value;
+        setInputList(list);
+      };
+       
+      // handle click event of the Remove button
+      const handleRemoveClick = index => {
+        const list = [...inputList];
+        list.splice(index, 1);
+        setInputList(list);
+      };
+       
+      // handle click event of the Add button
+      const handleAddClick = () => {
+        setInputList([...inputList, { ingredient: ''}]);
+      };
 
     const descriptionElementRef = React.useRef(null);
     React.useEffect(() => {
@@ -74,17 +95,30 @@ function RecipeModal(props) {
                             //     shrink: true,
                             // }}
                             variant="outlined" />
-                        <TextField
-                            // id="outlined-full-width"
-                            label="Ingredients"
-                            // onChange={props.handleChange('ingredient')}
-                            // value={props.ingredient}
-                            fullWidth
-                            margin="normal"
-                            // InputLabelProps={{
-                            //     shrink: true,
-                            // }} 
-                            variant="outlined"/>
+
+                        {inputList.map((x, i) => {
+                            return (
+                                <>
+                                <TextField
+                                    // id="outlined-full-width"
+                                    label="Ingredient"
+                                    name="ingredient"
+                                    onChange={e => handleInputChange(e, i)}
+                                    value={x.ingredient}
+                                    fullWidth
+                                    margin="normal"
+                                    // InputLabelProps={{
+                                    //     shrink: true,
+                                    // }} 
+                                    variant="outlined" />
+                                <div>
+                                    {inputList.length !== 1 && <button onClick={() => handleRemoveClick(i)}>Remove</button>}
+                                    {inputList.length - 1 === i && <button onClick={handleAddClick}>Add</button>}
+                                </div>
+                                </>
+                            );
+                        })}
+
                         <TextField
                             id="outlined-textarea"
                             label="Directions"
@@ -97,6 +131,7 @@ function RecipeModal(props) {
                             //     shrink: true,
                             // }}
                             variant="outlined" />
+
                     </DialogContent>
                 </DialogContent>
                 <DialogActions>
@@ -114,6 +149,6 @@ function RecipeModal(props) {
 
 RecipeModal.propTypes = {
     classes: PropTypes.object.isRequired,
-  };
+};
 
-  export default withStyles(styles)(RecipeModal);
+export default withStyles(styles)(RecipeModal);

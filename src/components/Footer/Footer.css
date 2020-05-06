@@ -1,5 +1,5 @@
 footer {
-    margin-top: 80px;
-    position: relative;
-    left: 88px;
+    position: fixed;
+    bottom: 0;
+    margin-left: 88px;
 }
