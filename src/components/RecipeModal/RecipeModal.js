@@ -5,7 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
@@ -35,6 +35,10 @@ function RecipeModal(props) {
     const handleSave = () => {
         props.handleSave(inputList);
         setOpen(false);
+        props.dispatch({type: 'FETCH_RECIPES'});
+        props.dispatch({type: 'FETCH_INGREDIENTS'});
+        setInputList([{ ingredient: '' }]);
+        
     }
 
     // handle input change
@@ -151,4 +155,4 @@ RecipeModal.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(RecipeModal);
+export default connect()(withStyles(styles)(RecipeModal));

@@ -13,8 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import RecipeDetails from '../RecipeDetails/RecipeDetails';
+import RecipeMenu from '../RecipeMenu/RecipeMenu';
 import './RecipeItem.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,39 +40,83 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const dateParse = (date) => {
+  let newDate = new Date(date);
+  let month = '';
+  switch (newDate.getMonth()) {
+    case 0:
+      month = 'January';
+      break;
+    case 1:
+      month = 'February';
+      break;
+    case 2:
+      month = 'March';
+      break;
+    case 3:
+      month = 'April';
+      break;
+    case 4:
+      month = 'May';
+      break;
+    case 5:
+      month = 'June';
+      break;
+    case 6:
+      month = 'July';
+      break;
+    case 7:
+      month = 'August';
+      break;
+    case 8:
+      month = 'September';
+      break;
+    case 9:
+      month = 'October';
+      break;
+    case 10:
+      month = 'November';
+      break;
+    case 11:
+      month = 'December';
+      break;
+  }
+  return `${month} ${newDate.getDate()}, ${newDate.getFullYear()}`;
+}
+
 export default function RecipeItem(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {props.recipe.recipe[0]}
           </Avatar>
         }
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            <RecipeMenu id={props.recipe.id} />
           </IconButton>
         }
         title={props.recipe.recipe}
-        subheader="September 14, 2016"
+        subheader={dateParse(props.recipe.created_at)}
       />
       <CardMedia
         className={classes.media}
-        image="/static/images/cards/paella.jpg"
+        image={props.recipe.image}
         title={props.recipe.recipe}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           Calories: {props.recipe.calories}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
           Protein: {props.recipe.protein}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
           Sugar: {props.recipe.sugar}
         </Typography>
       </CardContent>
@@ -87,18 +131,17 @@ export default function RecipeItem(props) {
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={handleExpandClick}
+          // onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
+          aria-label="show more">
+          <RecipeDetails ingredients={props.ingredients} recipe={props.recipe} />
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Directions:</Typography>
           <Typography paragraph>
-          {props.recipe.directions}
+            {props.recipe.directions}
           </Typography>
         </CardContent>
       </Collapse>

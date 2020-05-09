@@ -14,7 +14,8 @@ function* fetchRecipes (action){
 function* addRecipe (action) {
     const recipeItem = {
         recipe: action.payload.recipe,
-        directions: action.payload.directions
+        directions: action.payload.directions,
+        image: action.payload.image
     }
     try{
         const response = yield axios.post(`/api/meal/recipes`, recipeItem);
@@ -26,9 +27,20 @@ function* addRecipe (action) {
     }
 }
 
+function* deleteRecipe(action){
+    try{
+      yield axios.delete(`/api/meal/recipes/${action.payload}`);
+      yield put ({type: 'FETCH_RECIPES'});
+    }
+    catch(error){
+      console.log('Error in deleteRecipe', error);
+    }
+  }
+
 function* recipeSaga(){
     yield takeLatest('FETCH_RECIPES', fetchRecipes);
     yield takeLatest('ADD_RECIPE', addRecipe);
+    yield takeLatest('DELETE_RECIPE', deleteRecipe);
 }
 
 export default recipeSaga;

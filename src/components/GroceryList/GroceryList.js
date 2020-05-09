@@ -31,6 +31,12 @@ class GroceryList extends Component {
             category_id: this.state.category_id
         }
         this.props.dispatch({ type: 'ADD_GROCERY', payload: item });
+        this.setState({
+            description: '',
+            quantity: '',
+            unit_id: 0,
+            category_id: 0
+        })
     }
 
     render() {

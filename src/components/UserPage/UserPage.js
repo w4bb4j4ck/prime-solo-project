@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import Sidebar from '../Sidebar/Sidebar';
+import HomeTable from '../HomeTable/HomeTable';
 import './UserPage.css';
 
 // this could also be written with destructuring parameters as:
@@ -16,8 +16,8 @@ const UserPage = (props) => (
       <h1 id="welcome">
         Welcome, {props.user.username}!
       </h1>
-      <p>Your ID is: {props.user.id}</p>
-      <LogOutButton className="log-in" />
+      {/* <p>Your ID is: {props.user.id}</p> */}
+      <HomeTable />
     </div>
   </div>
 );
@@ -27,6 +27,7 @@ const UserPage = (props) => (
 // const mapStateToProps = ({user}) => ({ user });
 const mapStateToProps = state => ({
   user: state.user,
+  recipes: state.recipes
 });
 
 // this allows us to use <App /> in index.js

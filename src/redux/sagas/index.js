@@ -6,6 +6,7 @@ import recipeSaga from './recipeSaga';
 import grocerySaga from './grocerySaga';
 import unitSaga from './unitSaga';
 import categorySaga from './categorySaga';
+import IngredientSaga from './ingredientSaga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -23,5 +24,6 @@ export default function* rootSaga() {
     grocerySaga(),
     unitSaga(),
     categorySaga(),
+    IngredientSaga(),
   ]);
 }

@@ -14,6 +14,7 @@ class RecipeList extends Component {
 
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_RECIPES' });
+        this.props.dispatch({ type: 'FETCH_INGREDIENTS' });
     }
 
     handleChange = (input) => (event) => {
@@ -26,9 +27,18 @@ class RecipeList extends Component {
         const newRecipe = {
             recipe: this.state.recipe,
             directions: this.state.directions,
-            ingredients: inputList
+            ingredients: inputList,
+            image: this.randomImage()
         }
         this.props.dispatch({type: 'ADD_RECIPE', payload: newRecipe});
+        this.setState({
+            recipe: '',
+            directions: '',
+        })
+    }
+
+    randomImage = () => {
+        return ('/images/generic' + Math.floor((Math.random() * 9) + 1) + '.jpg');
     }
 
     render() {
@@ -45,7 +55,7 @@ class RecipeList extends Component {
                     <div className="grid-container">
                         {this.props.recipes.map((recipe) =>
                             <div className="grid-item" key={recipe.id}>
-                                <RecipeItem recipe={recipe} />
+                                <RecipeItem recipe={recipe} ingredients={this.props.ingredients} />
                             </div>)}
                     </div>
                 </div>
@@ -57,6 +67,7 @@ class RecipeList extends Component {
 const mapStateToProps = (reduxStore) => ({
     recipes: reduxStore.recipes,
     units: reduxStore.units,
+    ingredients: reduxStore.ingredients
 })
 
 export default connect(mapStateToProps)(RecipeList);

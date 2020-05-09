@@ -53,7 +53,7 @@ function ListModal(props) {
     }
 
     const handleSave = () => {
-        const update = input
+        const update = input;
         console.log('TODO save', update);
     }
 

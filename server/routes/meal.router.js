@@ -5,8 +5,17 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/recipes', rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "recipes" JOIN "ingredients" ON "recipes"."id" = "ingredients"."recipe_id" 
-    ORDER BY "recipes"."recipe";`;
+  const queryText = `SELECT * FROM "recipes" ORDER BY "recipe";`;
+  pool.query(queryText)
+    .then((result) => { res.send(result.rows); })
+    .catch((error) => {
+      console.log('Error in router.get.', error);
+      res.sendStatus(500);
+    });
+});
+
+router.get('/ingredients', rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * FROM "ingredients";`;
   pool.query(queryText)
     .then((result) => { res.send(result.rows); })
     .catch((error) => {
@@ -16,8 +25,8 @@ router.get('/recipes', rejectUnauthenticated, (req, res) => {
 });
 
 router.post('/recipes', (req, res) => {
-  const queryText = `INSERT INTO "recipes" ("recipe", "directions") VALUES ($1, $2) RETURNING id;`;
-  pool.query(queryText, [req.body.recipe, req.body.directions])
+  const queryText = `INSERT INTO "recipes" ("recipe", "directions", "image", "created_at") VALUES ($1, $2, $3, $4) RETURNING id;`;
+  pool.query(queryText, [req.body.recipe, req.body.directions, req.body.image, 'NOW()'])
     .then((result) => { res.send(result.rows); })
     .catch((error) => {
       console.log('Error in router.post.', error);
@@ -37,6 +46,17 @@ router.post('/recipes/:id', (req, res) => {
     .then(() => { res.sendStatus(204); })
     .catch((error) => {
       console.log('Error in router.post.', error);
+      res.sendStatus(500);
+    });
+});
+
+router.delete('/recipes/:id', (req, res) => {
+  console.log(req.params.id);
+  const queryText = 'DELETE FROM "recipes" WHERE id=$1;';
+  pool.query(queryText, [req.params.id])
+    .then(() => { res.sendStatus(200); })
+    .catch((error) => {
+      console.log('Error completing SELECT plant query', error);
       res.sendStatus(500);
     });
 });
@@ -97,7 +117,7 @@ router.put('/groceries', (req, res) => {
     })
 })
 
-router.get('/units', rejectUnauthenticated, (req, res) => {
+router.get('/units', (req, res) => {
   const queryText = `SELECT * FROM "units";`;
   pool.query(queryText)
     .then((result) => { res.send(result.rows); })
@@ -107,7 +127,7 @@ router.get('/units', rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.get('/categories', rejectUnauthenticated, (req, res) => {
+router.get('/categories', (req, res) => {
   const queryText = `SELECT * FROM "categories";`;
   pool.query(queryText)
     .then((result) => { res.send(result.rows); })
