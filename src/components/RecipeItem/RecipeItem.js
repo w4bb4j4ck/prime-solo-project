@@ -80,6 +80,9 @@ const dateParse = (date) => {
     case 11:
       month = 'December';
       break;
+    default:
+      month = 'Month';
+      break;
   }
   return `${month} ${newDate.getDate()}, ${newDate.getFullYear()}`;
 }
@@ -110,7 +113,7 @@ export default function RecipeItem(props) {
         title={props.recipe.recipe}
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        {/* <Typography variant="body2" color="textSecondary" component="p">
           Calories: {props.recipe.calories}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
@@ -118,7 +121,7 @@ export default function RecipeItem(props) {
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           Sugar: {props.recipe.sugar}
-        </Typography>
+        </Typography> */}
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">

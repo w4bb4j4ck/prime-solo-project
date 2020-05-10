@@ -41,7 +41,7 @@ function ListTable(props) {
           {props.groceries.map((row) => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
-                <ListModal quantity={row.quantity} units={props.units} categories={props.categories}
+                <ListModal quantity={row.quantity} units={props.units} categories={props.categories} id={row.id}
                           description={row.description} unit_id={row.unit_id} category_id={row.category_id} editMode={true} />
               </TableCell>
               <TableCell align="right">{row.quantity}</TableCell>

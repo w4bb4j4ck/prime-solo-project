@@ -100,13 +100,10 @@ router.delete('/groceries/:id', (req, res) => {
 });
 
 router.put('/groceries', (req, res) => {
-  const queryText = `UPDATE "list_items" SET "description" = $1, "quantity" = $2, "unit_id" = $3, "category_id" = $4 
-  WHERE "id" = $5;`;
+  const queryText = `UPDATE "list_items" SET "description" = $1, "quantity" = $2 WHERE "id" = $3;`;
   const queryValues = [
     req.body.description,
     req.body.quantity,
-    req.body.unit_id,
-    req.body.category_id,
     req.body.id
   ];
   pool.query(queryText, queryValues)

@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -53,8 +54,13 @@ function ListModal(props) {
     }
 
     const handleSave = () => {
-        const update = input;
-        console.log('TODO save', update);
+        let update = {
+            description: input.description,
+            quantity: input.quantity,
+            id: props.id
+        }
+        props.dispatch({type: 'UPDATE_GROCERY', payload: update});
+        setOpen(false);
     }
 
     const handleChange = (event) => setInput({
@@ -205,4 +211,4 @@ ListModal.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ListModal);
+export default connect()(withStyles(styles)(ListModal));

@@ -1,26 +1,32 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import Sidebar from '../Sidebar/Sidebar';
 import HomeTable from '../HomeTable/HomeTable';
 import './UserPage.css';
 
-// this could also be written with destructuring parameters as:
-// const UserPage = ({ user }) => (
-// and then instead of `props.user.username` you could use `user.username`
-const UserPage = (props) => (
-  <div className="main-container">
-    <div className="sidebar">
-      <Sidebar />
-    </div>
-    <div className="main-data">
-      <h1 id="welcome">
-        Welcome, {props.user.username}!
+class UserPage extends Component {
+
+  componentDidMount() {
+    this.props.dispatch({ type: 'FETCH_RECIPES' });
+  }
+
+  render() {
+    return (
+      <div className="main-container">
+        <div className="sidebar">
+          <Sidebar />
+        </div>
+        <div className="main-data">
+          <h1 id="welcome">
+            Welcome, {this.props.user.username}!
       </h1>
-      {/* <p>Your ID is: {props.user.id}</p> */}
-      <HomeTable />
-    </div>
-  </div>
-);
+          {/* <p>Your ID is: {props.user.id}</p> */}
+          <HomeTable recipes={this.props.recipes} user={this.props.user} />
+        </div>
+      </div>
+    )
+  }
+};
 
 // Instead of taking everything from state, we just want the user info.
 // if you wanted you could write this code like this:
