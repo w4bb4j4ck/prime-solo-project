@@ -1,0 +1,9 @@
+.login-box {
+    position: fixed;
+    top: 25vh;
+    left: 44vw;
+}
+
+.input-field {
+    margin: 24px 6px;
+}

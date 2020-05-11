@@ -1,5 +1,9 @@
 footer {
     position: fixed;
     bottom: 0;
-    margin-left: 88px;
+    margin-left: 84px;
+    display: block;
+    width: 100%;
+    background-color: #F2F3F4;
+    text-align: center;
 }

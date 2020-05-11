@@ -123,7 +123,7 @@ export default function HomeTable(props) {
 
   React.useEffect(() => {
     setRows([
-      createData('1/1/1', 'Blaze', ['Thoman Salad', 'Steak', 'Chicken Coconut Curry', 'Guacamole']),
+      createData('5/11/20', 'Blaze', ['Thoman Salad', 'Steak', 'Chicken Coconut Curry', 'Guacamole']),
       createData('5/4/20', 'Blaze', ['Chicken Coconut Curry', 'Patacones', 'Skagen', 'Guacamole']),
       createData('4/27/20', 'Blaze', ['Guacamole', 'Garbanzos', 'Steak', 'Thoman Salad']),
       createData('4/20/20', 'Blaze', ['Chili', 'Arroz con Pollo', 'Garbanzos', 'Hamburguers']),
@@ -149,17 +149,16 @@ export default function HomeTable(props) {
     setPage(0);
   };
 
-  const mealPlan = () => {
-    let date = new Date();
-    let recipes = randomRecipes(props.recipes, 4);
-    let plan = createData(date, 'Blaze', [recipes[0].recipe, recipes[1].recipe, recipes[2].recipe, recipes[3].recipe]);
-    console.log(plan);
-    setRows([...rows, plan]);
-  }
+  // const mealPlan = () => {
+  //   let date = new Date();
+  //   let recipes = randomRecipes(props.recipes, 4);
+  //   let plan = createData(date, 'Blaze', [recipes[0].recipe, recipes[1].recipe, recipes[2].recipe, recipes[3].recipe]);
+  //   console.log(plan);
+  //   setRows([...rows, plan]);
+  // }
 
   return (
     <Paper className={classes.root}>
-      <button onClick={mealPlan}>Test</button>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

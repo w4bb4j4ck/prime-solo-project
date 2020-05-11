@@ -1,7 +1,13 @@
 .nav {
   overflow: hidden;
   background-color: crimson;
-  height: 96px;
+  height: 90px;
+  position: sticky;
+  top: 0;
+}
+
+.login-nav {
+  background-color: transparent;
 }
 
 .nav-link {
@@ -20,16 +26,32 @@
   outline:0;
 }
 
+.login-nav-link {
+  float: left;
+  color: black;
+  background-color: transparent;
+  text-align: center;
+  padding: 36px 10px;
+  text-decoration: none;
+  font-size: 15px;
+}
+
 .nav-link:hover {
   background-color: darkred;
 }
 
 .nav-right {
-  float: right;
+  /* float: right; */
+  display: inline;
+  position: fixed;
+  right: 0;
 }
 
-#nav-menu {
-  /* width: 84px;
-  height: 96px; */
-  background-color: gray;
+.nav-name {
+  display: inline;
+  font-family: 'Aclonica', sans-serif;
+  font-size: 36px;
+  position: fixed;
+  left: 20px;
+  top: 22px;
 }

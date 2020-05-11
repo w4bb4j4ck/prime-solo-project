@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import './LoginPage.css';
 
 class LoginPage extends Component {
   state = {
@@ -40,37 +43,37 @@ class LoginPage extends Component {
             {this.props.errors.loginMessage}
           </h2>
         )}
+        <div className="login-box">
         <form onSubmit={this.login}>
           <h1>Login</h1>
-          <div>
-            <label htmlFor="username">
-              Username:
-              <input
-                type="text"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleInputChangeFor('username')}
-              />
-            </label>
+          <div className="input-field">
+            <TextField 
+            id="username" 
+            label="Username" 
+            variant="filled"
+            type="text"
+            name="username"
+            value={this.state.username}
+            onChange={this.handleInputChangeFor('username')} />
           </div>
-          <div>
-            <label htmlFor="password">
-              Password:
-              <input
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleInputChangeFor('password')}
-              />
-            </label>
+          <div className="input-field">
+            <TextField 
+            id="password" 
+            label="Password" 
+            variant="filled"
+            type="password"
+            name="password"
+            value={this.state.password}
+            onChange={this.handleInputChangeFor('password')} />
           </div>
-          <div>
-            <input
-              className="log-in"
-              type="submit"
-              name="submit"
-              value="Log In"
-            />
+          <div className="input-field">
+            <Button 
+            variant="contained" 
+            color="primary"
+            type="submit"
+            onClick={this.login}>
+              Log In
+            </Button>
           </div>
         </form>
         <center>
@@ -82,6 +85,7 @@ class LoginPage extends Component {
             Register
           </button>
         </center>
+        </div>
       </div>
     );
   }

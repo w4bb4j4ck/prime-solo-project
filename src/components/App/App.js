@@ -31,8 +31,8 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
-          <Nav />
+        <div className={this.props.user.id ? "" : "login-mode"}>
+          <Nav loginMode={this.props.user.id ? false : true} />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
             <Redirect exact from="/" to="/home" />
@@ -80,4 +80,8 @@ class App extends Component {
   )}
 }
 
-export default connect()(App);
+const mapStateToProps = (reduxStore) => ({
+  user: reduxStore.user
+})
+
+export default connect(mapStateToProps)(App);
